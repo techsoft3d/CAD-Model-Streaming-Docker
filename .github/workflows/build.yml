@@ -3,7 +3,7 @@ name: Docker Demo on Self-Hosted Runner
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   demo:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Authenticate with GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u techsoftrick --password-stdin
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u techsoft3d --password-stdin
 
       - name: Pull Latest Docker Images
         run: |
