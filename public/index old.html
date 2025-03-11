@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>My Viewer</title>
+
+    <style type="text/css">
+        #viewer {
+            width: 640px;
+            height: 480px;
+            position: relative;
+            outline: 1px solid black;
+        }
+    </style>
+    <script type="module">
+        import * as Communicator from "./hoops/hoops-web-viewer.mjs";
+        import { ServerConnection } from "./hoops/ServerConnection.js";
+        window.onload = () => {
+            var server = new ServerConnection("http://localhost:11182");
+            server.connect().then(function () {
+                const hwv = new Communicator.WebViewer({
+                    containerId: "viewer",
+                    endpointUri: server._endpointuri,
+                    model: "Ducati900SS café racer"
+                });
+
+                hwv.setCallbacks({
+                    sceneReady: () => {
+                        hwv.view.setBackgroundColor(Communicator.Color.blue(), Communicator.Color.white());
+                    },
+                    modelStructureReady: () => {
+                    },
+                    camera: () => {
+                    },
+                    selectionArray: (selectionItems) => {
+                        if (selectionItems.length > 0) {
+                            for (const selectionItem of selectionItems) {
+                                modelTree.onSelection(selectionItem);
+                            }
+                        } else {
+                            modelTree.onSelection(null);
+                        }
+                    }
+                });
+
+                // let menu = new Menu(hwv);
+                // modelTree = new ModelTree(hwv, "modeltree");
+                hwv.start();
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <h3>Web Viewer Minimal Example</h3>
+    <div id="viewer"></div>
+</body>
+
+</html>

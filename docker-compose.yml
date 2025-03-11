@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  hoops:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ghcr.io/techsoft3d/streaming-server:latest
+    container_name: hoops
+    ports:
+      - "11182:11182"
+      - "11000-11034:11000-11034"
+    volumes:
+      - "./patches/server_config.js:/opt/hoops_communicator/quick_start/server_config.js"
+      - "./patches/Utils.js:/opt/hoops_communicator/server/node/lib/Utils.js"
+      - "./models:/opt/hoops_communicator/models"
+      - "./hoops_license.txt:/opt/hoops_communicator/hoops_license.txt"
+
+  app:
+    image: ghcr.io/techsoft3d/node-server:latest
+    container_name: file-server
+    ports:
+      - "3000:3000"  #change to whatever port you want files to be served from, but default is 3000
+    environment:
+      - PORT=3000  # This sets the PORT dynamically
+    volumes:
+      - ./public:/app/public  # Mounts local "public" folder into the container
+    depends_on:
+      - hoops
