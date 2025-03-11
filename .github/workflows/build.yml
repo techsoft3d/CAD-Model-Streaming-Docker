@@ -1,0 +1,25 @@
+name: Docker Demo on Self-Hosted Runner
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  demo:
+    runs-on: self-hosted # Runs on your self-hosted runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Authenticate with GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u techsoftrick --password-stdin
+
+      - name: Pull Latest Docker Images
+        run: |
+          docker pull ghcr.io/techsoft3d/streaming-server:latest
+          docker pull ghcr.io/techsoft3d/node-server:latest
+
+      - name: Build and Run Docker Containers
+        run: |
+          docker-compose up --build -d
