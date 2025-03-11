@@ -1,4 +1,4 @@
-# Template Cloud Demo 
+# CAD Model Streaming Docker Demo 
 This repo will walk you through the steps to run a HOOPS Communicator based Linux Streaming Server Docker Container and a companion node-server for static files. 
 
 ## Getting Stated 
