@@ -64,7 +64,7 @@
 
             var viewer;
 
-            var server = new ServerConnection("http://cad-model-streaming-docker-backend.techsoft3d.com:11182");
+            var server = new ServerConnection("http://localhost:11182");
 
             await server.connect();
             viewer = new Communicator.WebViewer({
