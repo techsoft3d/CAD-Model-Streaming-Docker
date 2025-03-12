@@ -13,6 +13,11 @@ This repo will walk you through the steps to run a HOOPS Communicator based Linu
 1. Create a file called hoops_license.txt in the root directory of this project
 2. Place your license key string in this file without any quotes
 
+## Change to use IP of host server (or localhost if running locally)  
+1. Update line 67 of index.html ```var server = new ServerConnection("http://<host_ip>:11182");```
+
+2. Update line 39 of server_config.js ```publicHostname: "<host_ip>```
+
 ## Add additional models
 1. Place any additional models that you'd like to stream inside of the models directory. These models must be compatible with HC 2025.1.0 or older
 
