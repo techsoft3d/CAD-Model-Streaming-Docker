@@ -20,7 +20,7 @@ jobs:
 
       - name: Inject Host IP into index.html
         run: |
-          echo "<script>window.HOST_IP='${{ secrets.HOST_IP }}';</script>" >> ./public/index.html
+          sed -i 's|<head>|<head>\n<script>window.HOST_IP="${{ secrets.HOST_IP }}";</script>|' ./public/index.html
 
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
