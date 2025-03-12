@@ -64,7 +64,7 @@
 
             var viewer;
 
-            var server = new ServerConnection("http://34.214.127.191:11182"); //change to IP of host server
+            var server = new ServerConnection(`http://${HOST_IP}:11182`); //change to IP of host server
 
             await server.connect();
             viewer = new Communicator.WebViewer({
