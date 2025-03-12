@@ -14,9 +14,9 @@ jobs:
 
       - name: Create hoops_license.txt
         run: |
-          echo "${{ secrets.HOOPS_LICENSE }}" | base64 --decode > hoops_license.txt
-          ls -l hoops_license.txt  # Debug: Verify file exists
-          cat hoops_license.txt  # Debug: Check file content (optional, remove in production)
+          echo "${{ secrets.HOOPS_LICENSE }}" > hoops_license.txt
+          ls -l hoops_license.txt  # Verify file exists
+          cat hoops_license.txt  # Debugging: Check file content (remove in production)
 
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
