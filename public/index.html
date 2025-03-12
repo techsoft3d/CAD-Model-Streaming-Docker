@@ -64,7 +64,7 @@
 
             var viewer;
 
-            var server = new ServerConnection("http://localhost:11182");
+            var server = new ServerConnection("http://127.0.0.1:11182");
 
             await server.connect();
             viewer = new Communicator.WebViewer({
