@@ -22,4 +22,4 @@ jobs:
 
       - name: Build and Run Docker Containers
         run: |
-          docker-compose up --build -d
+          docker-compose up -d --force-recreate
