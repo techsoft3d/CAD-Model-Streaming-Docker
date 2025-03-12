@@ -22,6 +22,9 @@ jobs:
         run: |
           sed -i 's|<head>|<head>\n<script>window.HOST_IP="${{ secrets.HOST_IP }}";</script>|' ./public/index.html
 
+      - name: Set Environment Variable for Docker
+        run: echo "HOST_IP=${{ secrets.HOST_IP }}" >> $GITHUB_ENV
+
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
