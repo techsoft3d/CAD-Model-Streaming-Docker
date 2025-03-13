@@ -27,4 +27,3 @@ This repo will walk you through the steps to run a HOOPS Communicator based Linu
 
 ## View template application
 1. Open a browser window and navigate to ```http://localhost:3000``` 
-    
