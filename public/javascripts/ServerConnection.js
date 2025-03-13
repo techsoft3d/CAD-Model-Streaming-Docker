@@ -31,6 +31,6 @@ class ServerConnection {
   
     parseServerSuccessResponse(text) {
           this._jsonResponse = JSON.parse(text);
-          this._endpointuri =  this._jsonResponse.endpoints["wss"];
+          this._endpointuri =  this._jsonResponse.endpoints["ws"];
     }
   }
