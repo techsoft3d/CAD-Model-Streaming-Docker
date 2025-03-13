@@ -24,6 +24,8 @@ jobs:
 
       - name: Write SSL certificates to files
         run: |
+          pwd  # Print the current working directory
+          ls -la  # List files before creating certs
           mkdir -p certs
           echo "${{ secrets.SSL_CERT }}" > certs/server.crt
           echo "${{ secrets.SSL_KEY }}" > certs/server.key
