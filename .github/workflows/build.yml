@@ -33,11 +33,11 @@ jobs:
       - name: Verify SSL Certificates
         run: |
           echo "🔍 Checking SSL certificate files..."
-          if [ ! -s /home/ubuntu/certs/server.crt ] || [ ! -s /home/ubuntu/certs/server.key ]; then
+          if [ ! -s certs/server.crt ] || [ ! -s certs/server.key ]; then
             echo "❌ Error: SSL certificate files are missing or empty!"
             exit 1
           fi
-          ls -la /home/ubuntu/certs/
+          ls -la certs/
 
       - name: Set Environment Variable for Docker
         run: echo "HOST_IP=${{ secrets.HOST_IP }}" >> $GITHUB_ENV
