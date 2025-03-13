@@ -64,7 +64,7 @@
 
             var viewer;
 
-            var server = new ServerConnection("https://cad-model-streaming-docker.techsoft3d.com/startserver"); //change to IP of host server
+            var server = new ServerConnection("https://cad-model-streaming-docker.techsoft3d.com"); //change to IP of host server
 
             await server.connect();
             viewer = new Communicator.WebViewer({
