@@ -49,7 +49,7 @@ jobs:
         run: |
           docker pull ghcr.io/techsoft3d/streaming-server:latest
           docker pull ghcr.io/techsoft3d/node-server:latest
-
+          docker pull ghcr.io/techsoft3d/proxy-server:latest
       - name: Build and Run Docker Containers
         run: |
           docker-compose up -d --force-recreate
