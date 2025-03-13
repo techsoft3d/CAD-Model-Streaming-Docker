@@ -30,7 +30,12 @@ class ServerConnection {
     }
   
     parseServerSuccessResponse(text) {
-          this._jsonResponse = JSON.parse(text);
-          this._endpointuri =  this._jsonResponse.endpoints["ws"];
-    }
+      this._jsonResponse = JSON.parse(text);
+      this._endpointuri = this._jsonResponse.endpoints["ws"];
+
+      // 🔥 Force WebSocket to use `wss://` instead of `ws://`
+      if (this._endpointuri.startsWith("ws://")) {
+          this._endpointuri = this._endpointuri.replace("ws://", "wss://");
+      }
+  }
   }
