@@ -54,13 +54,13 @@ var config = {
 
     // Determines the full-chain SSL certificate file. This must be set when enabling any
     // component for SSL.
-    sslCertificateFile: "/opt/certs/server.crt",
+    sslCertificateFile: "/opt/hoops_communicator/certs/server.crt",
 
     // Determines the SSL private-key file. This must be set when enabling any component for SSL.
-    sslPrivateKeyFile: "/opt/certs/server.key",
+    sslPrivateKeyFile: "/opt/hoops_communicator/certs/server.key",
 
     // Path to the SSL certificate authority that will be used to validate the certificate during liveliness requests
-    sslCertificateAuthorityPath: "/opt/certs/ca.crt",
+    sslCertificateAuthorityPath: "/opt/hoops_communicator/certs/ca.crt",
 
     // Determines if SSL is enabled for the file-server.
     sslEnableFileServer: true,
