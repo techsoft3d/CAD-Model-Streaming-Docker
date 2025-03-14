@@ -12,7 +12,6 @@ services:
       - "./patches/Utils.js:/opt/hoops_communicator/server/node/lib/Utils.js"
       - "./models:/opt/hoops_communicator/models"
       - "./hoops_license.txt:/opt/hoops_communicator/hoops_license.txt"
-      - "./certs/server.key:/opt/hoops_communicator/certs/server.key:ro"
     environment:
       - HOST_IP=${HOST_IP}
 
