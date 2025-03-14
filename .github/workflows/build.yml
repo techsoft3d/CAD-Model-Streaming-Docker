@@ -29,6 +29,7 @@ jobs:
           mkdir -p certs
           echo "${{ secrets.SSL_CERT }}" > certs/server.crt
           echo "${{ secrets.SSL_KEY }}" > certs/server.key
+          echo "${{ secrets.CA_CERT }}" > certs/ca.crt
 
       - name: Verify SSL Certificates
         run: |
