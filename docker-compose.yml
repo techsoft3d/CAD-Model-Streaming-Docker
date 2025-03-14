@@ -4,6 +4,7 @@ services:
   hoops:
     image: ghcr.io/techsoft3d/streaming-server:latest
     container_name: hoops
+    restart: unless-stopped
     ports:
       - "11182:11182"
       - "11000-11034:11000-11034"
@@ -18,6 +19,7 @@ services:
   app:
     image: ghcr.io/techsoft3d/node-server:latest
     container_name: file-server
+    restart: unless-stopped
     ports:
       - "3000:3000"  #change to whatever port you want files to be served from, but default is 3000
     environment:
@@ -30,6 +32,7 @@ services:
   proxy-server:
     image: ghcr.io/techsoft3d/proxy-server:latest  
     container_name: proxy-server
+    restart: unless-stopped
     ports:
       - "443:443"
     depends_on:
