@@ -11,10 +11,12 @@ services:
     volumes:
       - "./patches/server_config.js:/opt/hoops_communicator/quick_start/server_config.js"
       - "./patches/Utils.js:/opt/hoops_communicator/server/node/lib/Utils.js"
-      - "./models:/opt/hoops_communicator/models"
+      - models:/opt/hoops_communicator/models
       - "./hoops_license.txt:/opt/hoops_communicator/hoops_license.txt"
     environment:
       - HOST_IP=${HOST_IP}
+    networks:
+      - shared-network 
 
   app:
     image: ghcr.io/techsoft3d/node-server:latest
@@ -25,10 +27,11 @@ services:
     environment:
       - PORT=3000  # This sets the PORT dynamically
     volumes:
-      - ./public:/app/public  # Mounts local "public" folder into the container
+      - public:/app/public  # Mounts local "public" folder into the container
     depends_on:
       - hoops
-
+    networks:
+      - shared-network 
   proxy-server:
     image: ghcr.io/techsoft3d/proxy-server:latest  
     container_name: proxy-server
@@ -37,3 +40,9 @@ services:
       - "443:443"
     depends_on:
       - hoops
+    networks:
+      - shared-network 
+
+networks:
+  shared-network:
+    external: true
