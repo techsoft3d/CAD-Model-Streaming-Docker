@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  hoops:
-    image: ghcr.io/techsoft3d/streaming-server:latest
-    container_name: hoops
+  hoops-staging:
+    image: ghcr.io/techsoft3d/streaming-server:staging
+    container_name: hoops-staging
     restart: unless-stopped
     ports:
-      - "11182:11182"
-      - "11000-11034:11000-11034"
+      - "11183:11183"
+      - "11035-11070:11035-11070"
     volumes:
       - "./patches/server_config.js:/opt/hoops_communicator/quick_start/server_config.js"
       - "./patches/Utils.js:/opt/hoops_communicator/server/node/lib/Utils.js"
@@ -18,30 +18,27 @@ services:
     networks:
       - shared-network 
 
-  app:
-    image: ghcr.io/techsoft3d/node-server:latest
-    container_name: file-server
+  file-server-staging:
+    image: ghcr.io/techsoft3d/node-server:staging
+    container_name: file-server-staging
     restart: unless-stopped
     ports:
-      - "3000:3000"  #change to whatever port you want files to be served from, but default is 3000
+      - "3001:3001"  #change to whatever port you want files to be served from, but default is 3000
     environment:
-      - PORT=3000  # This sets the PORT dynamically
+      - PORT=3001 # This sets the PORT dynamically
     volumes:
-      - public:/app/public  # Mounts local "public" folder into the container
+      - public-staging:/app/public  # Mounts local "public" folder into the container
     depends_on:
-      - hoops
+      - hoops-staging
     networks:
       - shared-network 
-  proxy-server:
-    image: ghcr.io/techsoft3d/proxy-server:latest  
-    container_name: proxy-server
-    restart: unless-stopped
-    ports:
-      - "443:443"
-    depends_on:
-      - hoops
-    networks:
-      - shared-network 
+
+
+volumes:
+  public-staging:
+    external: true
+  models:
+    external: true
 
 networks:
   shared-network:

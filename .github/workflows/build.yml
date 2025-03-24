@@ -3,7 +3,7 @@ name: Docker Demo on Self-Hosted Runner
 on:
   push:
     branches:
-      - master
+      - staging
 
 jobs:
   demo:
@@ -17,10 +17,6 @@ jobs:
           echo "${{ secrets.HOOPS_LICENSE }}" | base64 --decode > hoops_license.txt
           ls -l hoops_license.txt  # Verify file exists
           cat hoops_license.txt  # Debugging: Check file content (remove in production)
-
-      - name: Inject Host IP into index.html
-        run: |
-          sed -i 's|<head>|<head>\n<script>window.HOST_IP="${{ secrets.HOST_IP }}";</script>|' ./public/index.html
 
       - name: Write SSL certificates to files
         run: |
@@ -48,25 +44,16 @@ jobs:
 
       - name: Pull Latest Docker Images
         run: |
-          docker pull ghcr.io/techsoft3d/streaming-server:latest
-          docker pull ghcr.io/techsoft3d/node-server:latest
-          docker pull ghcr.io/techsoft3d/proxy-server:latest
+          docker pull ghcr.io/techsoft3d/streaming-server:staging
+          docker pull ghcr.io/techsoft3d/node-server:staging 
      
       - name: Copy `./public` into External Docker Volume (Using Temporary Container)
         run: |
           docker run --rm \
-            -v public:/volume \
-            -v $(pwd)/public:/backup \
+            -v public-staging:/volume \
+            -v $(pwd)/public-staging:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
   
-          docker run --rm \
-            -v patches:/volume \
-            -v $(pwd)/patches:/backup \
-            alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-          docker run --rm \
-            -v models:/volume \
-            -v $(pwd)/models:/backup \
-            alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
       
       - name: Build and Run Docker Containers
         run: |
