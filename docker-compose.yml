@@ -19,8 +19,7 @@ services:
       - HOST_IP=${HOST_IP}
     networks:
       - shared-network 
-    command:  # this is used to copy the hoops webviewer files to the node server docker container 
-    ["/bin/sh", "-c", " 
+    command: ["/bin/sh", "-c", " 
         echo 'Copying HOOPS files to public/hoops...' &&
         mkdir -p /opt/public/hoops &&
         cp /opt/hoops_communicator/web_viewer/deprecated/src/js/hoops_web_viewer.js /opt/public/hoops/ &&
