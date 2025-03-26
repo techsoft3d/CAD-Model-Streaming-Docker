@@ -11,7 +11,7 @@ services:
     volumes:
       - "./patches-staging/server_config.js:/opt/hoops_communicator/quick_start/server_config.js"
       - "./patches-staging/Utils.js:/opt/hoops_communicator/server/node/lib/Utils.js"
-      - models-staging:/opt/hoops_communicator/models
+      - models:/opt/hoops_communicator/models
       - "./hoops_license.txt:/opt/hoops_communicator/hoops_license.txt"
       - public-staging:/opt/public-staging  # Shared volume to copy files
 
