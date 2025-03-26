@@ -28,7 +28,7 @@ LogSpawnCategory values can be binary or'd together using "|"
 var config = {
     // The port for the spawn-server REST and proxy calls. Note that setting this to 0 or null will disable the
     // the spawn-server, which may help with troubleshooting.
-    spawnServerPort: 11182,
+    spawnServerPort: 11183,
 
     // The hostname to use for broker-connection stream-cache servers or when enabling SSL.
     // This field can be used to generate endpoints containing a public DNS or IP address.
@@ -84,7 +84,7 @@ var config = {
 
     // First websocket port. The range of used Websocket ports will therefore be:
     //   [spawnWebsocketPortsBegin, (spawnWebsocketPortsBegin + spawnMaxSpawnCount - 1)]
-    spawnWebsocketPortsBegin: 11000,
+    spawnWebsocketPortsBegin: 11035,
 
     ////////////////////////////////////////////////////////////////////////////////
     // Liveliness settings for spawned stream-cache servers.
