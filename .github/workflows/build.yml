@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - staging
-
+  repository_dispatch:
+    types: [manual-trigger]
 jobs:
   run-in-oregon:
     name: Run on Oregon Runner
