@@ -52,6 +52,8 @@ services:
       - hoops
     networks:
       - shared-network 
+    volumes:
+      - ./certs:/app/certs 
 
 networks:
   shared-network:
