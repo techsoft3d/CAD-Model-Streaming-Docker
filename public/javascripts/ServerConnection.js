@@ -38,7 +38,7 @@ class ServerConnection {
       const host = window.location.hostname;
 
       // Rewrite to go through reverse proxy
-      this._endpointuri = `wss://${host}/wsproxy/${port}`;
+      this._endpointuri = `wss://${window.location.hostname}/wsproxy/${port}`;
     } else {
       throw new Error("Invalid WebSocket URI received from server: " + rawUri);
     }
