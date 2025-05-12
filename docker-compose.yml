@@ -47,7 +47,7 @@ services:
     networks:
       - shared-network
   proxy-server:
-    image: ghcr.io/techsoft3d/proxy-server:latest
+    image: ghcr.io/techsoft3d/proxy-server:staging
     container_name: proxy-server
     restart: unless-stopped
     ports:
