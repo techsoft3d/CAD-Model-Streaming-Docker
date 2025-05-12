@@ -36,7 +36,7 @@ var config = {
   // This value has no effect when using proxying unless SSL is enabled.
   // When SSL is enabled, this hostname must be verifiable against the supplied
   // certificate chain.
-  publicHostname: "127.0.0.1", //change to server ip address if using ssl
+  publicHostname: "cad-model-streaming-test.techsoft3d.com" || "127.0.0.1", //change to server ip address if using ssl
 
   // Determine if the servers use a mix of IPv4 and IPv6, or force to all IPv4
   // IPVersion values: { Auto, ForceIPv4 }
@@ -54,22 +54,22 @@ var config = {
 
   // Determines the full-chain SSL certificate file. This must be set when enabling any
   // component for SSL.
-  sslCertificateFile: null,
+  sslCertificateFile: "/opt/hoops_communicator/certs/server.crt",
 
   // Determines the SSL private-key file. This must be set when enabling any component for SSL.
-  sslPrivateKeyFile: null,
+  sslPrivateKeyFile: "/opt/hoops_communicator/certs/server.key",
 
   // Path to the SSL certificate authority that will be used to validate the certificate during liveliness requests
-  sslCertificateAuthorityPath: null,
+  sslCertificateAuthorityPath: "/opt/hoops_communicator/certs/ca.crt",
 
   // Determines if SSL is enabled for the file-server.
-  sslEnableFileServer: false,
+  sslEnableFileServer: true,
 
   // Determines if SSL is enabled for the spawn-server.
-  sslEnableSpawnServer: false,
+  sslEnableSpawnServer: true,
 
   // Determines if SSL is enabled for the spawned stream-cache servers.
-  sslEnableScServer: false,
+  sslEnableScServer: true,
 
   // Disables certificate revocation checks for spawned stream-cache servers.
   // Only relevant for Windows liveliness requests
