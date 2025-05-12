@@ -30,11 +30,17 @@ class ServerConnection {
 
   parseServerSuccessResponse(text) {
     this._jsonResponse = JSON.parse(text);
-    this._endpointuri = this._jsonResponse.endpoints["ws"];
+    const rawUri = this._jsonResponse.endpoints["ws"];
 
-    // 🔥 Force WebSocket to use `wss://` instead of `ws://`
-    if (this._endpointuri.startsWith("ws://")) {
-      this._endpointuri = this._endpointuri.replace("ws://", "wss://");
+    const match = rawUri.match(/^ws:\/\/[^:]+:(\d+)/);
+    if (match) {
+      const port = match[1];
+      const host = window.location.hostname;
+
+      // Rewrite to go through reverse proxy
+      this._endpointuri = `wss://${host}/wsproxy/${port}`;
+    } else {
+      throw new Error("Invalid WebSocket URI received from server: " + rawUri);
     }
   }
 }
