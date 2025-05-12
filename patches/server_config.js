@@ -63,13 +63,13 @@ var config = {
   sslCertificateAuthorityPath: null,
 
   // Determines if SSL is enabled for the file-server.
-  sslEnableFileServer: true,
+  sslEnableFileServer: false,
 
   // Determines if SSL is enabled for the spawn-server.
-  sslEnableSpawnServer: true,
+  sslEnableSpawnServer: false,
 
   // Determines if SSL is enabled for the spawned stream-cache servers.
-  sslEnableScServer: true,
+  sslEnableScServer: false,
 
   // Disables certificate revocation checks for spawned stream-cache servers.
   // Only relevant for Windows liveliness requests
