@@ -30,11 +30,21 @@ class ServerConnection {
 
   parseServerSuccessResponse(text) {
     this._jsonResponse = JSON.parse(text);
-    this._endpointuri = this._jsonResponse.endpoints["ws"];
+    const rawUri = this._jsonResponse.endpoints["ws"];
 
-    // 🔥 Force WebSocket to use `wss://` instead of `ws://`
-    if (this._endpointuri.startsWith("ws://")) {
-      this._endpointuri = this._endpointuri.replace("ws://", "wss://");
+    console.log("Raw WS URI from spawn response:", rawUri);
+
+    // Extract port from "ws://127.0.0.1:11000"
+    const match = rawUri.match(/^ws:\/\/[^:]+:(\d+)/);
+    if (match) {
+      const port = match[1];
+      const host = window.location.hostname;
+
+      // ✅ Use your reverse proxy to connect
+      this._endpointuri = `wss://${host}/wsproxy/${port}`;
+      console.log("Rewritten endpoint:", this._endpointuri);
+    } else {
+      throw new Error("Invalid WebSocket URI in spawn response: " + rawUri);
     }
   }
 }
