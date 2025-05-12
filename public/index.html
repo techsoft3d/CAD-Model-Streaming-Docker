@@ -64,11 +64,9 @@
             var server = new ServerConnection("https://cad-model-streaming-test.techsoft3d.com"); //change to IP of host server
 
             await server.connect();
-            const endpoint = "wss://" + window.location.hostname + "/wsproxy/11182";
-
             viewer = new Communicator.WebViewer({
                 containerId: "viewerContainer",
-                endpointUri: endpoint,
+                endpointUri: server._endpointuri,
                 model: modelName,
                 enginePath: '/hoops',
                 rendererType: 0
