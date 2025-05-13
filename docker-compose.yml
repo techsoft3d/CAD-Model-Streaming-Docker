@@ -46,18 +46,18 @@ services:
       - hoops
     networks:
       - shared-network
-  proxy-server:
-    image: ghcr.io/techsoft3d/proxy-server:staging
-    container_name: proxy-server
-    restart: unless-stopped
-    ports:
-      - "443:443"
-    depends_on:
-      - hoops
-    networks:
-      - shared-network
-    volumes:
-      - ./certs:/app/certs
+  # proxy-server:
+  #   image: ghcr.io/techsoft3d/proxy-server:staging
+  #   container_name: proxy-server
+  #   restart: unless-stopped
+  #   ports:
+  #     - "443:443"
+  #   depends_on:
+  #     - hoops
+  #   networks:
+  #     - shared-network
+  #   volumes:
+  #     - ./certs:/app/certs
 
 networks:
   shared-network:
