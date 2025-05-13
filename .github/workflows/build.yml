@@ -55,7 +55,7 @@ jobs:
         run: |
           docker pull ghcr.io/techsoft3d/streaming-server:latest
           docker pull ghcr.io/techsoft3d/node-server:latest
-          # docker pull ghcr.io/techsoft3d/proxy-server:staging
+          docker pull ghcr.io/techsoft3d/proxy-server:staging
 
       - name: Copy `./public` into External Docker Volume (Using Temporary Container)
         run: |
