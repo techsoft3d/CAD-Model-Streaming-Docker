@@ -30,11 +30,14 @@ class ServerConnection {
 
   parseServerSuccessResponse(text) {
     this._jsonResponse = JSON.parse(text);
-    this._endpointuri = this._jsonResponse.endpoints["ws"];
+    let rawWsUri = this._jsonResponse.endpoints["ws"];
 
-    // 🔥 Force WebSocket to use `wss://` instead of `ws://`
-    if (this._endpointuri.startsWith("ws://")) {
-      this._endpointuri = this._endpointuri.replace("ws://", "wss://");
-    }
+    // Extract the port and session path
+    const url = new URL(rawWsUri);
+    const port = url.port;
+    const sessionPath = url.pathname; // e.g., /session/abc123
+
+    // Rewrite to match Nginx WebSocket proxy
+    this._endpointuri = `wss://${window.location.hostname}/wsproxy/${port}${sessionPath}`;
   }
 }
