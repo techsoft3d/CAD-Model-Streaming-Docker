@@ -6,7 +6,7 @@ class ServerConnection {
   connect() {
     var _this = this;
     var request = new XMLHttpRequest();
-    request.open("POST", this._endpoint + "/wsproxy/11182/spawn");
+    request.open("POST", this._endpoint + "/wsproxy/11182");
     request.overrideMimeType("application/json");
     request.setRequestHeader("Content-Type", "application/json");
     request.timeout = 60000;
