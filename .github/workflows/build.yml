@@ -11,6 +11,8 @@ jobs:
     name: Run on Oregon Runner
     runs-on: [self-hosted, oregon]
     steps:
+      - name: Fix file ownership
+        run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -84,6 +86,8 @@ jobs:
     name: Run on Paris Runner
     runs-on: [self-hosted, paris]
     steps:
+      - name: Fix file ownership
+        run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
