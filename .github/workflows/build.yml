@@ -54,7 +54,7 @@ jobs:
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Clean up server
-        run: docker image prune -a
+        run: docker image prune -af
 
       - name: Pull Latest Docker Images
         run: |
