@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: master 
+          ref: master
           clean: true
 
       - name: Create hoops_license.txt
@@ -51,19 +51,22 @@ jobs:
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+      - name: Clean up server
+        run: docker image prune -a
+
       - name: Pull Latest Docker Images
         run: |
           docker pull ghcr.io/techsoft3d/streaming-server:latest
           docker pull ghcr.io/techsoft3d/node-server:latest
           docker pull ghcr.io/techsoft3d/proxy-server:latest
-     
+
       - name: Copy `./public` into External Docker Volume (Using Temporary Container)
         run: |
           docker run --rm \
             -v public:/volume \
             -v $(pwd)/public:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-  
+
           docker run --rm \
             -v patches:/volume \
             -v $(pwd)/patches:/backup \
@@ -72,7 +75,7 @@ jobs:
             -v models:/volume \
             -v $(pwd)/models:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-      
+
       - name: Build and Run Docker Containers
         run: |
           docker-compose up -d --force-recreate
@@ -84,9 +87,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: master 
+          ref: master
           clean: true
-          
+
       - name: Create hoops_license.txt
         run: |
           echo "${{ secrets.HOOPS_LICENSE }}" | base64 --decode > hoops_license.txt
@@ -121,19 +124,22 @@ jobs:
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+      - name: Clean up server
+        run: docker image prune -a -f
+
       - name: Pull Latest Docker Images
         run: |
           docker pull ghcr.io/techsoft3d/streaming-server:latest
           docker pull ghcr.io/techsoft3d/node-server:latest
           docker pull ghcr.io/techsoft3d/proxy-server:latest
-     
+
       - name: Copy `./public` into External Docker Volume (Using Temporary Container)
         run: |
           docker run --rm \
             -v public:/volume \
             -v $(pwd)/public:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-  
+
           docker run --rm \
             -v patches:/volume \
             -v $(pwd)/patches:/backup \
@@ -142,7 +148,7 @@ jobs:
             -v models:/volume \
             -v $(pwd)/models:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-      
+
       - name: Build and Run Docker Containers
         run: |
           docker-compose up -d --force-recreate
