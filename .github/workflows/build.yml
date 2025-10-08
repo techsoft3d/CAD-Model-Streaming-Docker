@@ -49,6 +49,9 @@ jobs:
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+      - name: Clean up server
+        run: docker image prune -af
+
       - name: Pull Latest Docker Images
         run: |
           docker pull ghcr.io/techsoft3d/streaming-server:staging
@@ -106,6 +109,9 @@ jobs:
 
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Clean up server
+        run: docker image prune -af
 
       - name: Pull Latest Docker Images
         run: |
