@@ -24,14 +24,16 @@ services:
         "/bin/sh",
         "-c",
         "
-        echo 'Copying HOOPS files to public-staging/hoops...' &&
+        echo 'Refreshing /opt/public-staging/hoops...' &&
         mkdir -p /opt/public-staging/hoops &&
+        rm -rf /opt/public-staging/hoops/* &&
         cp /opt/hoops_communicator/web_viewer/deprecated/src/js/hoops_web_viewer.js /opt/public-staging/hoops/ &&
         cp /opt/hoops_communicator/web_viewer/deprecated/src/js/engine-wasm.js /opt/public-staging/hoops/ &&
         cp /opt/hoops_communicator/web_viewer/deprecated/src/js/engine-asmjs.js /opt/public-staging/hoops/ &&
         cp /opt/hoops_communicator/web_viewer/deprecated/src/js/engine.wasm /opt/public-staging/hoops/ &&
         echo 'Copy complete. Starting Streaming Server...' &&
-        exec ../../3rd_party/node/bin/node --expose-gc ./lib/Startup.js --config-file ../../quick_start/server_config.js",
+        exec ../../3rd_party/node/bin/node --expose-gc ./lib/Startup.js --config-file ../../quick_start/server_config.js
+        ",
       ]
   file-server-staging:
     image: ghcr.io/techsoft3d/node-server:staging
