@@ -132,4 +132,5 @@ jobs:
 
       - name: Build and Run Docker Containers
         run: |
-          docker-compose -p staging_project up -d --force-recreate
+          docker compose -p staging_project pull
+          docker compose -p staging_project up -d --remove-orphans --force-recreate
