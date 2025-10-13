@@ -22,7 +22,7 @@ services:
       - shared-network
     command: >
       sh -c "
-        set -Eeuo pipefail
+        set -eu
 
         echo 'Refreshing /opt/public-staging/hoops...'
         mkdir -p /opt/public-staging/hoops
