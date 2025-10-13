@@ -115,6 +115,9 @@ jobs:
       - name: Clean up server
         run: docker image prune -af
 
+      - name: show storage
+        run: df -h
+
       - name: Pull Latest Docker Images
         run: |
           docker pull ghcr.io/techsoft3d/streaming-server:staging
