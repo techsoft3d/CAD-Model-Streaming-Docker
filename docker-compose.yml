@@ -20,39 +20,37 @@ services:
       - HOST_IP=${HOST_IP}
     networks:
       - shared-network
-    command: [
-        "/bin/sh",
-        "-eu",
-        "-c",
-        '
-        echo ''Refreshing /opt/public-staging/hoops...'' &&
-        mkdir -p /opt/public-staging/hoops &&
+    command: >
+      sh -c "
+        set -Eeuo pipefail
+
+        echo 'Refreshing /opt/public-staging/hoops...'
+        mkdir -p /opt/public-staging/hoops
         rm -rf /opt/public-staging/hoops/*
 
-        # Verify required files exist
-        FILES=''
-        /opt/hoops_communicator/web_viewer/deprecated/src/js/hoops_web_viewer.js
-        /opt/hoops_communicator/web_viewer/deprecated/src/js/engine-wasm.js
-        /opt/hoops_communicator/web_viewer/deprecated/src/js/engine-asmjs.js
-        /opt/hoops_communicator/web_viewer/deprecated/src/js/engine.wasm
-        ''
+        # Space-separated list of required files
+        FILES='/opt/hoops_communicator/web_viewer/deprecated/src/js/hoops_web_viewer.js
+              /opt/hoops_communicator/web_viewer/deprecated/src/js/engine-wasm.js
+              /opt/hoops_communicator/web_viewer/deprecated/src/js/engine-asmjs.js
+              /opt/hoops_communicator/web_viewer/deprecated/src/js/engine.wasm'
 
-        for f in $FILES; do
-        if [ ! -f "$f" ]; then
-        echo "ERROR: Missing required file: $f" >&2
-        exit 1
-        fi
+        # Pre-check: fail if any required file is missing
+        for f in $$FILES; do
+          if [ ! -f \"$$f\" ]; then
+            echo \"❌ Missing required file: $$f\" >&2
+            exit 1
+          fi
         done
 
-        # Copy files (cp will also fail if any source disappears mid-run)
-        for f in $FILES; do
-        cp "$f" /opt/public-staging/hoops/
+        # Copy after successful validation
+        for f in $$FILES; do
+          cp \"$$f\" /opt/public-staging/hoops/
         done
 
-        echo ''Copy complete. Starting Streaming Server...'' &&
+        echo 'Copy complete. Starting Streaming Server...'
         exec ../../3rd_party/node/bin/node --expose-gc ./lib/Startup.js --config-file ../../quick_start/server_config.js
-        ',
-      ]
+      "
+
   file-server-staging:
     image: ghcr.io/techsoft3d/node-server:staging
     container_name: file-server-staging
