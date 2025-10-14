@@ -1,5 +1,5 @@
 # CAD Model Streaming Docker Demo 
-This repo will walk you through the steps to run a HOOPS Communicator based Linux Streaming Server Docker Container and a companion node-server for static files. 
+This repo will walk you through the steps to run a HOOPS Visualize for Web (formerly HOOPS Communicator) based Linux Streaming Server Docker Container and a companion node-server for static files. 
 
 ## Getting Stated 
 1. If you do not already have one, create a github token. This can be done here: https://github.com/settings/tokens. Be sure to give yourself full repo acces and write:packages access. 
