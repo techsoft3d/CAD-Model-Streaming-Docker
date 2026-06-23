@@ -3,7 +3,7 @@ name: Docker Demo on Self-Hosted Runner
 on:
   push:
     branches:
-      - master
+      - staging
   repository_dispatch:
     types: [manual-trigger]
 jobs:
@@ -16,18 +16,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: staging
           clean: true
 
       - name: Create hoops_license.txt
         run: |
           echo "${{ secrets.HOOPS_LICENSE }}" | base64 --decode > hoops_license.txt
           ls -l hoops_license.txt  # Verify file exists
-          cat hoops_license.txt  # Debugging: Check file content (remove in production)
-
-      - name: Inject Host IP into index.html
-        run: |
-          sed -i 's|<head>|<head>\n<script>window.HOST_IP="${{ secrets.HOST_IP }}";</script>|' ./public/index.html
 
       - name: Write SSL certificates to files
         run: |
@@ -54,33 +49,27 @@ jobs:
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Clean up server
-        run: docker image prune -af
+        run: docker system prune -af
+
+      - name: Show storage
+        run: df -h
 
       - name: Pull Latest Docker Images
         run: |
-          docker pull ghcr.io/techsoft3d/streaming-server:latest
-          docker pull ghcr.io/techsoft3d/node-server:latest
-          docker pull ghcr.io/techsoft3d/proxy-server:latest
+          docker pull ghcr.io/techsoft3d/streaming-server:staging
+          docker pull ghcr.io/techsoft3d/node-server:staging
 
-      - name: Copy `./public` into External Docker Volume (Using Temporary Container)
+      - name: Copy `./public-staging` into External Docker Volume (Using Temporary Container)
         run: |
           docker run --rm \
-            -v public:/volume \
-            -v $(pwd)/public:/backup \
-            alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-
-          docker run --rm \
-            -v patches:/volume \
-            -v $(pwd)/patches:/backup \
-            alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-          docker run --rm \
-            -v models:/volume \
-            -v $(pwd)/models:/backup \
+            -v public-staging:/volume \
+            -v $(pwd)/public-staging:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
 
       - name: Build and Run Docker Containers
         run: |
-          docker-compose up -d --force-recreate
+          docker compose -p staging_project pull
+          docker compose -p staging_project up -d --remove-orphans --force-recreate
 
   run-in-paris:
     name: Run on Paris Runner
@@ -91,18 +80,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: staging
           clean: true
 
       - name: Create hoops_license.txt
         run: |
           echo "${{ secrets.HOOPS_LICENSE }}" | base64 --decode > hoops_license.txt
           ls -l hoops_license.txt  # Verify file exists
-          cat hoops_license.txt  # Debugging: Check file content (remove in production)
-
-      - name: Inject Host IP into index.html
-        run: |
-          sed -i 's|<head>|<head>\n<script>window.HOST_IP="${{ secrets.HOST_IP }}";</script>|' ./public/index.html
 
       - name: Write SSL certificates to files
         run: |
@@ -129,30 +113,24 @@ jobs:
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Clean up server
-        run: docker image prune -a -f
+        run: docker system prune -af
+
+      - name: Show storage
+        run: df -h
 
       - name: Pull Latest Docker Images
         run: |
-          docker pull ghcr.io/techsoft3d/streaming-server:latest
-          docker pull ghcr.io/techsoft3d/node-server:latest
-          docker pull ghcr.io/techsoft3d/proxy-server:latest
+          docker pull ghcr.io/techsoft3d/streaming-server:staging
+          docker pull ghcr.io/techsoft3d/node-server:staging
 
-      - name: Copy `./public` into External Docker Volume (Using Temporary Container)
+      - name: Copy `./public-staging` into External Docker Volume (Using Temporary Container)
         run: |
           docker run --rm \
-            -v public:/volume \
-            -v $(pwd)/public:/backup \
-            alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-
-          docker run --rm \
-            -v patches:/volume \
-            -v $(pwd)/patches:/backup \
-            alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
-          docker run --rm \
-            -v models:/volume \
-            -v $(pwd)/models:/backup \
+            -v public-staging:/volume \
+            -v $(pwd)/public-staging:/backup \
             alpine sh -c "cp -r /backup/* /volume/ && ls -la /volume/"
 
       - name: Build and Run Docker Containers
         run: |
-          docker-compose up -d --force-recreate
+          docker compose -p staging_project pull
+          docker compose -p staging_project up -d --remove-orphans --force-recreate
